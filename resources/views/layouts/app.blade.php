@@ -43,7 +43,7 @@
                     $.each(products, function (key, product) {
                         html += [
                             '<tr>',
-                                '<td>' + product.image + '</td>',
+                                '<td><img src="{{\Illuminate\Support\Facades\Storage::url('images/')}}"></td>',
                                 '<td>&nbsp;&nbsp;&nbsp;</td>',
                                 '<td>',
                                     '<p class="lead">' + product.title + '</p>',
@@ -107,7 +107,7 @@
                                 success: function (response) {
                                     // Render the products in the cart list
                                     $('.cart .list').html(renderList(response));
-                                    $('.custom-column').append('<a href="#?id='+ id +'" class="btn btn-dark">{{__('Remove from Cart')}}</a>');
+                                    $('.custom-column').append('<a href="#?id=" class="btn btn-dark">{{__('Remove from Cart')}}</a>');
                                 }
                             });
                             break;
@@ -120,8 +120,8 @@
                                 dataType: 'json',
                                 success: function (response) {
                                     //
-
                                 }
+
                             });
 
                             $( ".login-form" ).on( "submit", function( event ) {
@@ -132,7 +132,9 @@
                                 password = $('#password').val();
 
                                 console.log(email + "\n" + password);
-                            });
+
+                    });
+
                             break;
 
                         case '#products':
@@ -189,7 +191,7 @@
                                 success: function (response) {
                                     // Render the products in the index list
                                     $('.index .list').html(renderList(response));
-                                    $('.custom-column').append('<a href="#?id='+ id +'" class="btn btn-dark">{{__('Add to Cart')}}</a>');
+                                    $('.custom-column').append('<a href="#?id=" class="btn btn-dark">{{__('Add to Cart')}}</a>');
                                 }
                             });
                             break;
