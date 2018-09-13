@@ -18,6 +18,23 @@
         <!-- Custom JS script -->
         <script type="text/javascript">
 
+            function getUrlVars()
+            {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    hash[1] = unescape(hash[1]);
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+
+                return vars;
+            }
+            var urlVars = getUrlVars();
+
             $(document).ready(function () {
 
                 function renderList(products) {
@@ -34,7 +51,7 @@
                                     '<p class="lead"> {{ __('$') }}' + product.price + '</p>',
                                 '</td>',
                                 '<td>&nbsp;&nbsp;&nbsp;</td>',
-                                '<td><a href="#?id='+ product.id +'" class="btn btn-dark custom-column"></a></td>',
+                                '<td class="custom-column"></td>',
                             '</tr>'
                         ].join('');
                     });
@@ -90,7 +107,7 @@
                                 success: function (response) {
                                     // Render the products in the cart list
                                     $('.cart .list').html(renderList(response));
-                                    $('.custom-column').append('{{__('Remove from Cart')}}');
+                                    $('.custom-column').append('<a href="#?id='+ id +'" class="btn btn-dark">{{__('Remove from Cart')}}</a>');
                                 }
                             });
                             break;
@@ -108,9 +125,13 @@
                             });
 
                             $( ".login-form" ).on( "submit", function( event ) {
+
                                 event.preventDefault();
-                                let form = $(this).serialize();
-                                console.log(form);
+
+                                email = $('#email').val();
+                                password = $('#password').val();
+
+                                console.log(email + "\n" + password);
                             });
                             break;
 
@@ -123,7 +144,8 @@
                                 success: function (response) {
                                     // Render the products in the products list
                                     $('.products .list').html(renderList(response));
-                                    $('.custom-column').append('{{__('Update')}} ');
+                                    $('.custom-column').append('<a href="#?id=" class="btn btn-success custom-column">{{__('Update')}}</a>' + '<a href="#?id=" class="btn btn-danger">{{__('Delete')}}</a>');
+
                                 }
                             });
                             break;
@@ -161,13 +183,13 @@
                             $('.index').show();
                             id = getUrlVars()["id"];
                             console.log(id);
-                            // Load the index products from the server
+                            // Load the index products from the servers
                             $.ajax('/index', {
                                 dataType: 'json',
                                 success: function (response) {
                                     // Render the products in the index list
                                     $('.index .list').html(renderList(response));
-                                    $('.custom-column').append('{{__('Add to Cart')}}');
+                                    $('.custom-column').append('<a href="#?id='+ id +'" class="btn btn-dark">{{__('Add to Cart')}}</a>');
                                 }
                             });
                             break;

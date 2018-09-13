@@ -108,7 +108,6 @@ class IndexController extends Controller
     }
 
     /**
-     * Display a login form.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -129,9 +128,6 @@ class IndexController extends Controller
                 session()->put('logged', $email);
                 return redirect()->route('products');
             }
-        }
-        if (!$request->ajax()) {
-            return view('pages.login');
         }
 
     }
